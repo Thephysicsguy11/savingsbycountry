@@ -1,3 +1,10 @@
+Aquí está el código actualizado con **Irlanda** y **Luxemburgo** reintegrados. Además, he mejorado la funcionalidad de comparación para mostrar:
+
+1. **Cuál país ofrece más ahorro**.
+2. **La diferencia exacta en euros**.
+
+### Código actualizado:
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +16,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: url(https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) no-repeat center center fixed;
+            background: url('background-image.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
         }
@@ -27,9 +34,15 @@
             width: 300px;
             margin: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
         .panel h2 {
             margin-top: 0;
+        }
+        .panel img {
+            width: 50px;
+            height: 30px;
+            margin-bottom: 10px;
         }
         .result {
             margin-top: 10px;
@@ -48,14 +61,19 @@
         .button:hover {
             background-color: #0056b3;
         }
+        .comparison-container {
+            margin: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <h1 style="text-align: center; margin-top: 20px;">Savings Calculator</h1>
 
     <div class="container">
-        <!-- Canada -->
+        <!-- Panels for each country -->
         <div class="panel">
+            <img src="canada-flag.png" alt="Canada Flag">
             <h2>Canada</h2>
             <label for="can-salary">Net Salary (CAD):</label>
             <input type="number" id="can-salary" step="0.01"><br><br>
@@ -71,8 +89,10 @@
             <div class="result" id="can-result"></div>
         </div>
 
+        <!-- Repeat the same panel structure for other countries -->
         <!-- Denmark -->
         <div class="panel">
+            <img src="denmark-flag.png" alt="Denmark Flag">
             <h2>Denmark</h2>
             <label for="den-salary">Net Salary (DKK):</label>
             <input type="number" id="den-salary" step="0.01"><br><br>
@@ -90,6 +110,7 @@
 
         <!-- Switzerland -->
         <div class="panel">
+            <img src="switzerland-flag.png" alt="Switzerland Flag">
             <h2>Switzerland</h2>
             <label for="swi-salary">Net Salary (CHF):</label>
             <input type="number" id="swi-salary" step="0.01"><br><br>
@@ -107,6 +128,7 @@
 
         <!-- Norway -->
         <div class="panel">
+            <img src="norway-flag.png" alt="Norway Flag">
             <h2>Norway</h2>
             <label for="nor-salary">Net Salary (NOK):</label>
             <input type="number" id="nor-salary" step="0.01"><br><br>
@@ -124,6 +146,7 @@
 
         <!-- Ireland -->
         <div class="panel">
+            <img src="ireland-flag.png" alt="Ireland Flag">
             <h2>Ireland</h2>
             <label for="ire-salary">Net Salary (€):</label>
             <input type="number" id="ire-salary" step="0.01"><br><br>
@@ -141,11 +164,14 @@
 
         <!-- Luxembourg -->
         <div class="panel">
+            <img src="luxembourg-flag.png" alt="Luxembourg Flag">
             <h2>Luxembourg</h2>
             <label for="lux-salary">Net Salary (€):</label>
             <input type="number" id="lux-salary" step="0.01"><br><br>
             <label for="lux-salaries">Number of Salaries:</label>
-            <input type="number" id="lux-salaries" step="1" min="1" value="1"><br><br>
+            <input type="number" id="lux-salaries" step="1" min="1" value="1"><br><br
+
+>
             <label for="lux-rent">Rent (€):</label>
             <input type="number" id="lux-rent" step="0.01"><br><br>
             <label for="lux-food">Food (€):</label>
@@ -157,43 +183,79 @@
         </div>
     </div>
 
+    <div class="comparison-container">
+        <h2>Compare Savings</h2>
+        <select id="country1">
+            <option value="Canada">Canada</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Norway">Norway</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Luxembourg">Luxembourg</option>
+        </select>
+        <select id="country2">
+            <option value="Canada">Canada</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Norway">Norway</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Luxembourg">Luxembourg</option>
+        </select>
+        <button class="button" onclick="compareSavings()">Compare</button>
+        <div id="comparison-result"></div>
+    </div>
+
     <script>
+        const savingsData = {};
+        const conversionRates = {
+            Canada: 0.675908,
+            Denmark: 0.134083,
+            Switzerland: 1.07318,
+            Norway: 0.0857582,
+            Ireland: 1,
+            Luxembourg: 1
+        };
+
         function calculateSavings(country) {
-            let salary, numberOfSalaries, rent, food, other, conversionRate, resultDiv, localResultText;
+            let salary = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salary`).value);
+            let numberOfSalaries = parseInt(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salaries`).value);
+            let rent = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-rent`).value);
+            let food = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-food`).value);
+            let other = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-other`).value);
 
-            // Define variables and conversion rates
-            const conversionRates = {
-                Canada: 0.675908, Denmark: 0.134083,
-                Switzerland: 1.07318, Norway: 0.0857582,
-                Ireland: 1, Luxembourg: 1
-            };
-            const localCurrencies = {
-                Canada: 'CAD', Denmark: 'DKK',
-                Switzerland: 'CHF', Norway: 'NOK',
-                Ireland: '€', Luxembourg: '€'
-            };
+            if (isNaN(salary) || isNaN(rent) || isNaN(food) || isNaN(other)) {
+                alert("Please fill all fields with valid numbers.");
+                return;
+            }
 
-            salary = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salary`).value) || 0;
-            numberOfSalaries = parseInt(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salaries`).value) || 1;
-            rent = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-rent`).value) || 0;
-            food = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-food`).value) || 0;
-            other = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-other`).value) || 0;
+            let totalIncome = salary * numberOfSalaries;
+            let totalExpenses = rent + food + other;
+            let savings = totalIncome - totalExpenses;
 
-            conversionRate = conversionRates[country];
-            resultDiv = document.getElementById(`${country.toLowerCase().substr(0, 3)}-result`);
-            localResultText = localCurrencies[country];
+            savingsData[country] = { local: savings, euros: savings * conversionRates[country] };
 
-            // Calculate total income and expenses in local currency
-            const totalIncome = salary * numberOfSalaries;
-            const totalExpenses = rent + food + other;
-            const savings = totalIncome - totalExpenses;
+            let resultDiv = document.getElementById(`${country.toLowerCase().substr(0, 3)}-result`);
+            resultDiv.innerHTML = `Savings: ${savings.toFixed(2)} ${country === "Ireland" || country === "Luxembourg" ? "€" : country === "Canada" ? "CAD" : country === "Denmark" ? "DKK" : country === "Switzerland" ? "CHF" : "NOK"} (${(savings * conversionRates[country]).toFixed(2)} €)`;
+        }
 
-            // Convert to EUR
-            const savingsInEUR = savings * conversionRate;
+        function compareSavings() {
+            const country1 = document.getElementById("country1").value;
+            const country2 = document.getElementById("country2").value;
 
-            // Display result
-            resultDiv.innerHTML = `Savings in ${localResultText}: ${savings.toFixed(2)} (${savingsInEUR.toFixed(2)}€)`;
+            if (!savingsData[country1] || !savingsData[country2]) {
+                document.getElementById("comparison-result").innerText = "Please calculate savings for both countries first.";
+                return;
+            }
+
+            let savings1 = savingsData[country1].euros;
+            let savings2 = savingsData[country2].euros;
+
+            let difference = Math.abs(savings1 - savings2);
+            let betterCountry = savings1 > savings2 ? country1 : country2;
+
+            document.getElementById("comparison-result").innerText = `You save more in ${betterCountry} by ${difference.toFixed(2)} €.`;
         }
     </script>
 </body>
 </html>
+```
