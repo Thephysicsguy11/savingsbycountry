@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(https://images.pexels.com/photos/459225/pexels-photo-459225.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .panel {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .panel h2 {
+            margin-top: 0;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2d6a4f;
+        }
+        .button {
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 20px;">Savings Calculator</h1>
+
+    <div class="container">
+        <!-- Canada -->
+        <div class="panel">
+            <h2>Canada</h2>
+            <label for="can-salary">Net Salary (CAD):</label>
+            <input type="number" id="can-salary" step="0.01"><br><br>
+            <label for="can-salaries">Number of Salaries:</label>
+            <input type="number" id="can-salaries" step="1" min="1" value="1"><br><br>
+            <label for="can-rent">Rent (CAD):</label>
+            <input type="number" id="can-rent" step="0.01"><br><br>
+            <label for="can-food">Food (CAD):</label>
+            <input type="number" id="can-food" step="0.01"><br><br>
+            <label for="can-other">Other Expenses (CAD):</label>
+            <input type="number" id="can-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Canada')">Calculate Savings</button>
+            <div class="result" id="can-result"></div>
+        </div>
+
+        <!-- Denmark -->
+        <div class="panel">
+            <h2>Denmark</h2>
+            <label for="den-salary">Net Salary (DKK):</label>
+            <input type="number" id="den-salary" step="0.01"><br><br>
+            <label for="den-salaries">Number of Salaries:</label>
+            <input type="number" id="den-salaries" step="1" min="1" value="1"><br><br>
+            <label for="den-rent">Rent (DKK):</label>
+            <input type="number" id="den-rent" step="0.01"><br><br>
+            <label for="den-food">Food (DKK):</label>
+            <input type="number" id="den-food" step="0.01"><br><br>
+            <label for="den-other">Other Expenses (DKK):</label>
+            <input type="number" id="den-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Denmark')">Calculate Savings</button>
+            <div class="result" id="den-result"></div>
+        </div>
+
+        <!-- Switzerland -->
+        <div class="panel">
+            <h2>Switzerland</h2>
+            <label for="swi-salary">Net Salary (CHF):</label>
+            <input type="number" id="swi-salary" step="0.01"><br><br>
+            <label for="swi-salaries">Number of Salaries:</label>
+            <input type="number" id="swi-salaries" step="1" min="1" value="1"><br><br>
+            <label for="swi-rent">Rent (CHF):</label>
+            <input type="number" id="swi-rent" step="0.01"><br><br>
+            <label for="swi-food">Food (CHF):</label>
+            <input type="number" id="swi-food" step="0.01"><br><br>
+            <label for="swi-other">Other Expenses (CHF):</label>
+            <input type="number" id="swi-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Switzerland')">Calculate Savings</button>
+            <div class="result" id="swi-result"></div>
+        </div>
+
+        <!-- Norway -->
+        <div class="panel">
+            <h2>Norway</h2>
+            <label for="nor-salary">Net Salary (NOK):</label>
+            <input type="number" id="nor-salary" step="0.01"><br><br>
+            <label for="nor-salaries">Number of Salaries:</label>
+            <input type="number" id="nor-salaries" step="1" min="1" value="1"><br><br>
+            <label for="nor-rent">Rent (NOK):</label>
+            <input type="number" id="nor-rent" step="0.01"><br><br>
+            <label for="nor-food">Food (NOK):</label>
+            <input type="number" id="nor-food" step="0.01"><br><br>
+            <label for="nor-other">Other Expenses (NOK):</label>
+            <input type="number" id="nor-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Norway')">Calculate Savings</button>
+            <div class="result" id="nor-result"></div>
+        </div>
+
+        <!-- Ireland -->
+        <div class="panel">
+            <h2>Ireland</h2>
+            <label for="ire-salary">Net Salary (€):</label>
+            <input type="number" id="ire-salary" step="0.01"><br><br>
+            <label for="ire-salaries">Number of Salaries:</label>
+            <input type="number" id="ire-salaries" step="1" min="1" value="1"><br><br>
+            <label for="ire-rent">Rent (€):</label>
+            <input type="number" id="ire-rent" step="0.01"><br><br>
+            <label for="ire-food">Food (€):</label>
+            <input type="number" id="ire-food" step="0.01"><br><br>
+            <label for="ire-other">Other Expenses (€):</label>
+            <input type="number" id="ire-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Ireland')">Calculate Savings</button>
+            <div class="result" id="ire-result"></div>
+        </div>
+
+        <!-- Luxembourg -->
+        <div class="panel">
+            <h2>Luxembourg</h2>
+            <label for="lux-salary">Net Salary (€):</label>
+            <input type="number" id="lux-salary" step="0.01"><br><br>
+            <label for="lux-salaries">Number of Salaries:</label>
+            <input type="number" id="lux-salaries" step="1" min="1" value="1"><br><br>
+            <label for="lux-rent">Rent (€):</label>
+            <input type="number" id="lux-rent" step="0.01"><br><br>
+            <label for="lux-food">Food (€):</label>
+            <input type="number" id="lux-food" step="0.01"><br><br>
+            <label for="lux-other">Other Expenses (€):</label>
+            <input type="number" id="lux-other" step="0.01"><br><br>
+            <button class="button" onclick="calculateSavings('Luxembourg')">Calculate Savings</button>
+            <div class="result" id="lux-result"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateSavings(country) {
+            let salary, numberOfSalaries, rent, food, other, conversionRate, resultDiv, localResultText;
+
+            // Define variables and conversion rates
+            const conversionRates = {
+                Canada: 0.675908, Denmark: 0.134083,
+                Switzerland: 1.07318, Norway: 0.0857582,
+                Ireland: 1, Luxembourg: 1
+            };
+            const localCurrencies = {
+                Canada: 'CAD', Denmark: 'DKK',
+                Switzerland: 'CHF', Norway: 'NOK',
+                Ireland: '€', Luxembourg: '€'
+            };
+
+            salary = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salary`).value) || 0;
+            numberOfSalaries = parseInt(document.getElementById(`${country.toLowerCase().substr(0, 3)}-salaries`).value) || 1;
+            rent = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-rent`).value) || 0;
+            food = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-food`).value) || 0;
+            other = parseFloat(document.getElementById(`${country.toLowerCase().substr(0, 3)}-other`).value) || 0;
+
+            conversionRate = conversionRates[country];
+            resultDiv = document.getElementById(`${country.toLowerCase().substr(0, 3)}-result`);
+            localResultText = localCurrencies[country];
+
+            // Calculate total income and expenses in local currency
+            const totalIncome = salary * numberOfSalaries;
+            const totalExpenses = rent + food + other;
+            const savings = totalIncome - totalExpenses;
+
+            // Convert to EUR
+            const savingsInEUR = savings * conversionRate;
+
+            // Display result
+            resultDiv.innerHTML = `Savings in ${localResultText}: ${savings.toFixed(2)} (${savingsInEUR.toFixed(2)}€)`;
+        }
+    </script>
+</body>
+</html>
